@@ -5,7 +5,11 @@
  * @returns {number}
  */
 function sum(a, b) {
-  return Number(a) + Number(b)
+  if(a && b) {
+  
+    return Number(a) + Number(b)
+  }
+
 }
 
 /**
