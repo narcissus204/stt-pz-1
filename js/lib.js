@@ -1,132 +1,81 @@
-/**
- * This function must add two numbers and return sum of numbers
- * @param a {number|string}
- * @param b {number|string}
- * @returns {number}
- */
 function sum(a, b) {
-  if(a && b) {
-  
-    return Number(a) + Number(b)
-  }
-
+  return Number(a) + Number(b);
 }
 
-/**
- * This function takes a number and raises it to a power
- * @param x
- * @param n
- * @returns {number}
- */
+function subtract(a, b) {
+  return Number(a) - Number(b);
+}
+
 function pow(x, n) {
   let result = 1;
-
   for (let i = 0; i < n; i++) {
     result *= x;
   }
-
   return result;
 }
 
-/**
- * This function calculate factorial of number
- * @param n {number}
- * @returns {number}
- */
 function factorial(n) {
   return n ? n * factorial(n - 1) : 1;
-};
-
-/**
- * This function calculate Fibonacci sequence
- * @param n
- * @returns {*|number}
- */
-function fibonacci(n) {
-  return (n > 2) ? fibonacci(n - 1) + fibonacci(n - 2) : 1;
 }
 
-/**
- * This function must remove some element for array of string by name
- * @param list {string[]}
- * @param name {string}
- * @returns {string[]}
- */
+function fibonacci(n) {
+  return n > 2 ? fibonacci(n - 1) + fibonacci(n - 2) : 1;
+}
+
 function removeByName(list, name) {
-  let result = [...list]
-  let index = result.indexOf(name);
+  const result = [...list];
+  const index = result.indexOf(name);
   if (index !== -1) {
     result.splice(index, 1);
   }
-
   return result;
 }
 
-/**
- * This function create counter
- * @param currentCount {number}
- * @returns {function(): number}
- */
 function makeCounter(currentCount) {
   return function () {
     return currentCount++;
   };
 }
 
-/**
- * This function create async timeout and return unixtime like timer Id
- * @param time {number}
- * @returns {number}
- */
-
 function getAsyncTimerId(time) {
   let timerId;
   setTimeout(() => {
-    timerId = Math.floor(Date.now() / 1000)
+    timerId = Math.floor(Date.now() / 1000);
   }, time);
+  return timerId;
+}
 
-  return timerId
-};
-
-/**
- * This function return promise and multiply paraments
- * @param x{number}
- * @returns {Promise<number>}
- */
-async function asyncMultiply(x) {
+function asyncMultiply(x) {
   return new Promise(resolve => {
-    setTimeout(resolve, 3000, 2 * x);
+    setTimeout(() => resolve(2 * x), 3000);
   });
-};
+}
 
-/**
- * This function create GET http request to server
- * @param url {string}
- * @returns {Promise<unknown>}
- */
 function httpGet(url) {
-
-  return new Promise(function (resolve, reject) {
-
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-
-    xhr.onload = function () {
-      if (this.status == 200) {
-        resolve(this.response);
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        resolve(xhr.responseText);
       } else {
-        let error = new Error(this.statusText);
-        error.code = this.status;
+        const error = new Error(xhr.statusText);
+        error.code = xhr.status;
         reject(error);
       }
     };
-
-    xhr.onerror = function () {
-      reject(new Error("Network Error"));
-    };
-
+    xhr.onerror = () => reject(new Error('Network Error'));
     xhr.send();
   });
-
 }
 
+window.sum = sum;
+window.subtract = subtract;
+window.pow = pow;
+window.factorial = factorial;
+window.fibonacci = fibonacci;
+window.removeByName = removeByName;
+window.makeCounter = makeCounter;
+window.getAsyncTimerId = getAsyncTimerId;
+window.asyncMultiply = asyncMultiply;
+window.httpGet = httpGet;
